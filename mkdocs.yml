@@ -19,7 +19,7 @@ theme:
       accent: purple
 
 nav:
-  - Quick Start: quickstart.md
+  - Quick Start: index.md
   - Core Concepts:
       - WebSocket Connections: core-concepts/websocket-connections.md
       - Handshake Routing: core-concepts/handshake-routing.md
