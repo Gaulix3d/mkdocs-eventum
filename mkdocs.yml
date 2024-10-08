@@ -1,0 +1,46 @@
+site_name: Eventum ASGI Documentation
+theme:
+  name: material
+  language: en
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/lightbulb
+        name: Switch to dark mode
+      primary: deep purple
+      accent: purple 
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate 
+      toggle:
+        icon: material/lightbulb-outline
+        name: Switch to light mode    
+      primary: deep purple
+      accent: purple
+
+nav:
+  - Quick Start: quickstart.md
+  - Core Concepts:
+      - WebSocket Connections: core-concepts/websocket-connections.md
+      - Handshake Routing: core-concepts/handshake-routing.md
+      - Event Routing: core-concepts/event-routing.md
+      - Middleware: core-concepts/middleware.md
+      - Lifespan Events: core-concepts/lifespan-events.md
+  - Additional Features:
+      - HTTP Exceptions: additional-features/http-exceptions.md
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight:
+      linenums: true
+
+
+
