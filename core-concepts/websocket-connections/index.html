@@ -1,0 +1,1048 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../..">
+      
+      
+        <link rel="next" href="../handshake-routing/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.40">
+    
+    
+      
+        <title>WebSocket Connections - Eventum ASGI Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.8c3ca2c6.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#websocket-connections" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Eventum ASGI Documentation" class="md-header__button md-logo" aria-label="Eventum ASGI Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Eventum ASGI Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              WebSocket Connections
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7M9 21a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1H9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7M9 21v-1h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1m3-17a5 5 0 0 0-5 5c0 2.05 1.23 3.81 3 4.58V16h4v-2.42c1.77-.77 3-2.53 3-4.58a5 5 0 0 0-5-5"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Eventum ASGI Documentation" class="md-nav__button md-logo" aria-label="Eventum ASGI Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Eventum ASGI Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Quick Start
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Core Concepts
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Core Concepts
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    WebSocket Connections
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    WebSocket Connections
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#accepting-a-connection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Accepting a Connection
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Accepting a Connection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#extra-headers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Extra Headers
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Extra Headers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#headers-as-a-dictionary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Headers as a dictionary
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#headers-as-a-headers-class-instance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Headers as a Headers class instance
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subprotocols-factory" class="md-nav__link">
+    <span class="md-ellipsis">
+      Subprotocols factory
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sending-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sending Data
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sending Data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sending-text" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sending Text
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sending-bytes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sending Bytes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sending-http-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sending HTTP Response
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#closing-connections" class="md-nav__link">
+    <span class="md-ellipsis">
+      Closing Connections
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flags" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flags
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Flags">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#adding-flags" class="md-nav__link">
+    <span class="md-ellipsis">
+      Adding Flags
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removing-flags" class="md-nav__link">
+    <span class="md-ellipsis">
+      Removing Flags
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getting-flags" class="md-nav__link">
+    <span class="md-ellipsis">
+      Getting Flags
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flags-usage-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flags Usage Example
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../handshake-routing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Handshake Routing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../event-routing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Event Routing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../middleware/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Middleware
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lifespan-events/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lifespan Events
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Additional Features
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Additional Features
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../additional-features/http-exceptions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HTTP Exceptions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#accepting-a-connection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Accepting a Connection
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Accepting a Connection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#extra-headers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Extra Headers
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Extra Headers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#headers-as-a-dictionary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Headers as a dictionary
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#headers-as-a-headers-class-instance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Headers as a Headers class instance
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subprotocols-factory" class="md-nav__link">
+    <span class="md-ellipsis">
+      Subprotocols factory
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sending-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sending Data
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sending Data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sending-text" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sending Text
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sending-bytes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sending Bytes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sending-http-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sending HTTP Response
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#closing-connections" class="md-nav__link">
+    <span class="md-ellipsis">
+      Closing Connections
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flags" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flags
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Flags">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#adding-flags" class="md-nav__link">
+    <span class="md-ellipsis">
+      Adding Flags
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removing-flags" class="md-nav__link">
+    <span class="md-ellipsis">
+      Removing Flags
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getting-flags" class="md-nav__link">
+    <span class="md-ellipsis">
+      Getting Flags
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flags-usage-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flags Usage Example
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="websocket-connections">WebSocket Connections</h1>
+<p>Eventum ASGI provides a simple way to handle WebSocket connections throght the <code>WSConnection</code> class. This class is responsible for managing the WebSocket connection and provides methods for sending and receiving data.</p>
+<h2 id="accepting-a-connection">Accepting a Connection</h2>
+<p>To accept the WebSocket connection, you need to call the <code>accept</code> method on the <code>WSConnection</code> instance. This method will initiate the WebSocket handshake and send the handshake response to the client.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@app</span><span class="o">.</span><span class="n">handshake_route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">websocket_handler</span><span class="p">(</span><span class="n">connection</span><span class="p">:</span> <span class="n">WSConnection</span><span class="p">):</span>
+    <span class="k">await</span> <span class="n">connection</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="extra-headers">Extra Headers</h3>
+<p>Additionally, you can pass an 'extra_headers' parameter to the <code>accept</code> method to add additional headers to the handshake response. You can either pass a dictionary or a 'Headers' class instance.</p>
+<h4 id="headers-as-a-dictionary">Headers as a dictionary</h4>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@app</span><span class="o">.</span><span class="n">handshake_route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">websocket_handler</span><span class="p">(</span><span class="n">connection</span><span class="p">:</span> <span class="n">WSConnection</span><span class="p">):</span>
+    <span class="k">await</span> <span class="n">connection</span><span class="o">.</span><span class="n">accept</span><span class="p">(</span><span class="n">extra_headers</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;X-Custom-Header&#39;</span><span class="p">:</span> <span class="s1">&#39;value&#39;</span><span class="p">})</span>
+</code></pre></div></td></tr></table></div>
+<h4 id="headers-as-a-headers-class-instance">Headers as a Headers class instance</h4>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kn">from</span> <span class="nn">eventum_asgi.models</span> <span class="kn">import</span> <span class="n">Headers</span>
+<span class="nd">@app</span><span class="o">.</span><span class="n">handshake_route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">websocket_handler</span><span class="p">(</span><span class="n">connection</span><span class="p">:</span> <span class="n">WSConnection</span><span class="p">):</span>
+    <span class="n">headers</span> <span class="o">=</span> <span class="n">Headers</span><span class="p">({</span><span class="s1">&#39;X-Custom-Header&#39;</span><span class="p">:</span> <span class="s1">&#39;value&#39;</span><span class="p">})</span>
+    <span class="k">await</span> <span class="n">connection</span><span class="o">.</span><span class="n">accept</span><span class="p">(</span><span class="n">extra_headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="subprotocols-factory">Subprotocols factory</h3>
+<p>You can also pass a 'subprotocols_factory' function as a parameter to the <code>accept</code> method to specify a function that will be handle the subprotocols choice. Function should return a single value as a string and accepts a subprotocols list as a parameter. </p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">subprotocols_factory</span><span class="p">(</span><span class="n">subprotocols</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">subprotocols</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">handshake_route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">websocket_handler</span><span class="p">(</span><span class="n">connection</span><span class="p">:</span> <span class="n">WSConnection</span><span class="p">):</span>
+    <span class="k">await</span> <span class="n">connection</span><span class="o">.</span><span class="n">accept</span><span class="p">(</span><span class="n">subprotocols_factory</span><span class="o">=</span><span class="n">subprotocols_factory</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="sending-data">Sending Data</h2>
+<p>Before diving futher into how to send and receive data it's important to learn the philosophy behind how Eventum ASGI handles WebSocket connections. The framework is maibly based on the concept of event-based routing. This means that most of the time you won't use methods like <code>receive_text</code>, <code>receive_bytes</code> or <code>receive_data</code> after you accepted a connection it gets into a loop and waits for an event to occur. Instead, you'll use the <code>send_text</code>, <code>send_bytes</code> methods to send data to the client directly from the event handlers.</p>
+<h3 id="sending-text">Sending Text</h3>
+<p>To send text data, you can use the <code>send_text</code> method. This method accepts a string as a parameter and sends it to the client.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@app</span><span class="o">.</span><span class="n">event</span><span class="p">(</span><span class="s1">&#39;user_registered&#39;</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">message_handler</span><span class="p">(</span><span class="n">connection</span><span class="p">:</span> <span class="n">WSConnection</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+    <span class="k">await</span> <span class="n">connection</span><span class="o">.</span><span class="n">send_text</span><span class="p">(</span><span class="s1">&#39;{&quot;event&quot;: &quot;user_registered&quot;, &quot;status&quot;: &quot;success&quot;}&#39;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="sending-bytes">Sending Bytes</h3>
+<p>To send bytes data, you can use the <code>send_bytes</code> method similarly to the <code>send_text</code> method. This method accepts a bytes-like object as a parameter and sends it to the client.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@app</span><span class="o">.</span><span class="n">event</span><span class="p">(</span><span class="s1">&#39;user_registered&#39;</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">message_handler</span><span class="p">(</span><span class="n">connection</span><span class="p">:</span> <span class="n">WSConnection</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+    <span class="k">await</span> <span class="n">connection</span><span class="o">.</span><span class="n">send_bytes</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;{&quot;event&quot;: &quot;user_registered&quot;, &quot;status&quot;: &quot;success&quot;}&#39;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When you receive an event you can access the json data using the <code>event</code> parameter.</p>
+</div>
+<h3 id="sending-http-response">Sending HTTP Response</h3>
+<p>Sometimes you may need to send an HTTP response to the client. You can use the <code>send_http_response</code> method to do this. This method accepts a <code>HttpResponse</code> object as a parameter and sends it to the client.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kn">from</span> <span class="nn">eventum_asgi.http_eventum</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">handshake_route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">websocket_handler</span><span class="p">(</span><span class="n">connection</span><span class="p">:</span> <span class="n">WSConnection</span><span class="p">):</span>
+    <span class="k">await</span> <span class="n">connection</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="s1">&#39;text/plain&#39;</span><span class="p">},</span> <span class="n">body</span><span class="o">=</span><span class="s1">&#39;Hello, World!&#39;</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">connection</span><span class="o">.</span><span class="n">send_http_response</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="closing-connections">Closing Connections</h2>
+<p>Closing a connection is a crucial aspect of handling WebSocket connections. When client disconects, eventum-asgi will automatically close the connection. You can also close a connection manually using the <code>close</code> method. This method accepts an optional <code>code</code> parameter that specifies the close code, and an optional <code>reason</code> parameter that specifies the close reason.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kn">from</span> <span class="nn">eventum_asgi</span> <span class="kn">import</span> <span class="n">WSConnection</span><span class="p">,</span> <span class="n">Eventum</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Eventum</span><span class="p">()</span>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">handshake_route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">websocket_handler</span><span class="p">(</span><span class="n">connection</span><span class="p">:</span> <span class="n">WSConnection</span><span class="p">):</span>
+    <span class="k">await</span> <span class="n">connection</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
+    <span class="k">await</span> <span class="n">connection</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="mi">3000</span><span class="p">,</span> <span class="n">reason</span><span class="o">=</span><span class="s1">&#39;Test disconnect&#39;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="flags">Flags</h2>
+<p>Flags is another core concept of <code>WSConnection</code> class. It's a dictionary for you to store any data you need to keep track of. You can use flags to store information about the connection, such as the user's session ID or any other data you need to access later. Can be useful for implementing features like authentication or authorization.</p>
+<h3 id="adding-flags">Adding Flags</h3>
+<p>You can set flags using the <code>add_flag</code> or 'add_flags' methods. The <code>add_flag</code> method accepts <code>name</code> and <code>value</code> as a parameters, while the <code>add_flags</code> method accepts a dictionary as a parameter.</p>
+<h3 id="removing-flags">Removing Flags</h3>
+<p>You can remove flags using the <code>remove_flag</code> or 'remove_flags' methods. The <code>remove_flag</code> method accepts <code>name</code> as a parameter, while the <code>remove_flags</code> method accepts a list of names as a parameter. There's also an option to clear all the flags using the <code>clear_flags</code> method.</p>
+<h3 id="getting-flags">Getting Flags</h3>
+<p>You can get flags using the <code>get_flag</code> or 'flags' methods. The <code>get_flag</code> method accepts <code>name</code> as a parameter and returns a specific flag, while the <code>flags</code> method returns a dictionary of all the flags.</p>
+<h3 id="flags-usage-example">Flags Usage Example</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@app</span><span class="o">.</span><span class="n">handshake_route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">websocket_handler</span><span class="p">(</span><span class="n">connection</span><span class="p">:</span> <span class="n">WSConnection</span><span class="p">):</span>
+    <span class="k">await</span> <span class="n">connection</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
+    <span class="n">connection</span><span class="o">.</span><span class="n">add_flag</span><span class="p">(</span><span class="s1">&#39;session_id&#39;</span><span class="p">,</span> <span class="s1">&#39;123&#39;</span><span class="p">)</span>
+    <span class="n">connection</span><span class="o">.</span><span class="n">add_flags</span><span class="p">({</span><span class="s1">&#39;some_data1&#39;</span><span class="p">:</span> <span class="s1">&#39;just_data1&#39;</span><span class="p">,</span> <span class="s1">&#39;some_data2&#39;</span><span class="p">:</span> <span class="s1">&#39;just_data2&#39;</span><span class="p">,</span> <span class="s1">&#39;some_data3&#39;</span><span class="p">:</span> <span class="s1">&#39;just_data3&#39;</span><span class="p">})</span>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">event</span><span class="p">(</span><span class="s1">&#39;profile_updated&#39;</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">profile_handler</span><span class="p">(</span><span class="n">connection</span><span class="p">:</span> <span class="n">WSConnection</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">get_flag</span><span class="p">(</span><span class="s1">&#39;session_id&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;123&#39;</span><span class="p">:</span>
+        <span class="k">await</span> <span class="n">connection</span><span class="o">.</span><span class="n">send_text</span><span class="p">(</span><span class="s1">&#39;{&quot;event&quot;: &quot;profile_updated&quot;, &quot;status&quot;: &quot;success&quot;}&#39;</span><span class="p">)</span>
+        <span class="n">connection</span><span class="o">.</span><span class="n">remove_flag</span><span class="p">(</span><span class="s1">&#39;some_data1&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">connection</span><span class="o">.</span><span class="n">flags</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">get_flag</span><span class="p">(</span><span class="s1">&#39;session_id&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;456&#39;</span><span class="p">:</span>
+        <span class="n">connection</span><span class="o">.</span><span class="n">clear_flags</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">connection</span><span class="o">.</span><span class="n">remove_flags</span><span class="p">([</span><span class="s1">&#39;some_data1&#39;</span><span class="p">,</span> <span class="s1">&#39;some_data2&#39;</span><span class="p">])</span>
+</code></pre></div></td></tr></table></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.525ec568.min.js"></script>
+      
+    
+  </body>
+</html>
